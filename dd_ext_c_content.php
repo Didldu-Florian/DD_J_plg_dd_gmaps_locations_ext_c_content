@@ -22,12 +22,20 @@ class PlgDD_GMaps_LocationsDD_Ext_C_Content extends JPlugin
 	/**
 	 * onextc event
 	 *
-	 * @return  boolean
+	 * @param   array   $results      the locations array
+	 * @param   string  $extc_plugin  context like 'com_content'
+	 *
+	 * @return  array
 	 *
 	 * @since   Version 1.0.0.0
 	 */
 	public function onextc($results, $extc_plugin)
 	{
+		if (count($results) == 0)
+		{
+			return $results;
+		}
+
 		$app = JFactory::getApplication();
 
 		/*
@@ -69,7 +77,9 @@ class PlgDD_GMaps_LocationsDD_Ext_C_Content extends JPlugin
 				{
 					if ($result->ext_c_id !== '0')
 					{
-						$results[$key]->extc_link = ContentHelperRoute::getArticleRoute($result->ext_c_id . '-' . $results[$key]->ext_c_alias, $results[$key]->ext_c_catid);
+						$results[$key]->extc_link = ContentHelperRoute::getArticleRoute(
+							$result->ext_c_id . '-' . $results[$key]->ext_c_alias, $results[$key]->ext_c_catid
+						);
 					}
 				}
 			}
@@ -109,6 +119,11 @@ class PlgDD_GMaps_LocationsDD_Ext_C_Content extends JPlugin
 		foreach ($results as $key => $result)
 		{
 			$ext_c_ids[] = $results[$key]->ext_c_id;
+		}
+
+		if (count($ext_c_ids) == 0)
+		{
+			return $results;
 		}
 
 		$db = JFactory::getDbo();

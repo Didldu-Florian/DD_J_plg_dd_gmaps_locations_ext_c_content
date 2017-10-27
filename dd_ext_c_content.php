@@ -45,7 +45,7 @@ class PlgDD_GMaps_LocationsDD_Ext_C_Content extends JPlugin
 		{
 			if ($app->input->getCmd('option') === 'com_content')
 			{
-				if ($app->input->getCmd('view') === 'item')
+				if ($app->input->getCmd('view') === 'article')
 				{
 					$inputId = (int) $app->input->getCmd('id');
 
